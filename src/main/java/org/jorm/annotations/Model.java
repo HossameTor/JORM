@@ -1,4 +1,4 @@
 package org.jorm.annotations;
 
-public class Toto {
+public @interface Model {
 }
