@@ -2,16 +2,34 @@ package org.jorm;
 
 import java.sql.*;
 
-public interface DatabaseConnection {
-    Connection connection = getConnection(AppConfig.getDatabaseURL(), AppConfig.getDatabaseUsername(), AppConfig.getDatabasePassword());
-    private static Connection getConnection(String url, String username, String password){
-        Connection con = null;
-        try{
-            con=DriverManager.getConnection(url, username, password);
-        }catch(Exception e){
-            System.out.println(e);
-        }finally {
-            return con;
+public class DatabaseConnection {
+    private static DatabaseConnection instance;
+
+    private Connection conn;
+
+    private DatabaseConnection() {
+        initializeConnection();
+    }
+
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    private void initializeConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(AppConfig.getDatabaseURL(),AppConfig.getDatabaseUsername(),AppConfig.getDatabasePassword());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
