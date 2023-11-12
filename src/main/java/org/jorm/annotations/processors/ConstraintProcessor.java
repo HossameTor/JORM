@@ -14,27 +14,29 @@ import java.util.Set;
 public class ConstraintProcessor extends AbstractProcessor {
     private String fieldStatement = "(";
 
-    public boolean process(List<Element> elemets) {
+    public boolean process(List<Element> elements) {
         boolean firstElement = true;
-        for (Element element : elemets) {
-            if (element.getKind() == ElementKind.FIELD){
-                if(!firstElement){
-                    fieldStatement+= " ,";
-                }else {
-                    firstElement = false;
+        for (Element element : elements) {
+            if (element.getAnnotation(Constraint.class)!= null){
+                if (element.getKind() == ElementKind.FIELD){
+                    if(!firstElement){
+                        fieldStatement+= " ,";
+                    }else {
+                        firstElement = false;
+                    }
+                    VariableElement fieldElement = (VariableElement) element;
+                    fieldStatement += fieldElement.getSimpleName() + " " + FieldTypeMapper(fieldElement);
+                    Constraint constraintAnnotation = fieldElement.getAnnotation(Constraint.class);
+                    String[] types = constraintAnnotation.types();
+                    for(String c : types){
+                        fieldStatement += " "+ c;
+                    }
+                    if (!constraintAnnotation.def().equals("")){
+                        fieldStatement += " DEFAULT " + constraintAnnotation.def();
+                    }
                 }
-                VariableElement fieldElement = (VariableElement) element;
-                fieldStatement += fieldElement.getSimpleName() + " " + FieldTypeMapper(fieldElement);
-                Constraint constraintAnnotation = fieldElement.getAnnotation(Constraint.class);
-                String[] types = constraintAnnotation.types();
-                for(String c : types){
-                    fieldStatement += " "+ c;
-                }
-                if (!constraintAnnotation.def().equals("")){
-                    fieldStatement += " DEFAULT " + constraintAnnotation.def();
-                }
+                fieldStatement +="\n";
             }
-            fieldStatement +="\n";
         }
         return true;
     }

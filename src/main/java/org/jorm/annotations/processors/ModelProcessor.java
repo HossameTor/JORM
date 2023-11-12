@@ -32,6 +32,10 @@ public class ModelProcessor extends AbstractProcessor {
                 constraintProcessor.process(elements);
                 String temp = constraintProcessor.getFieldsStatement();
                 query += temp;
+                RelationshipProcessor relationshipProcessor = new RelationshipProcessor();
+                relationshipProcessor.init(processingEnv);
+                relationshipProcessor.process(elements);
+                query += relationshipProcessor.getField_stm() + relationshipProcessor.getField_Fk();
                 query += ");";
                 System.out.println(query);
                 createTable(query);
