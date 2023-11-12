@@ -6,16 +6,17 @@ import org.jorm.annotations.Constraint;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
+import java.util.List;
 import java.util.Set;
 @SupportedAnnotationTypes("org.jorm.annotations.Constraint")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
 @AutoService(Processor.class)
 public class ConstraintProcessor extends AbstractProcessor {
     private String fieldStatement = "(";
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
+    public boolean process(List<Element> elemets) {
         boolean firstElement = true;
-        for (Element element : roundEnv.getElementsAnnotatedWith(Constraint.class)) {
+        for (Element element : elemets) {
             if (element.getKind() == ElementKind.FIELD){
                 if(!firstElement){
                     fieldStatement+= " ,";
@@ -28,6 +29,9 @@ public class ConstraintProcessor extends AbstractProcessor {
                 String[] types = constraintAnnotation.types();
                 for(String c : types){
                     fieldStatement += " "+ c;
+                }
+                if (!constraintAnnotation.def().equals("")){
+                    fieldStatement += " DEFAULT " + constraintAnnotation.def();
                 }
             }
             fieldStatement +="\n";
@@ -58,5 +62,10 @@ public class ConstraintProcessor extends AbstractProcessor {
     }
     public String getFieldsStatement(){
         return fieldStatement;
+    }
+
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        return false;
     }
 }

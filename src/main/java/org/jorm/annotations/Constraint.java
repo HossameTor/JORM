@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Constraint {
     String[] types() default {};
+    String def() default "";
 }

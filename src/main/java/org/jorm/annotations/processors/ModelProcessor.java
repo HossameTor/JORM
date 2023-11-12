@@ -11,7 +11,9 @@ import org.jorm.annotations.Model;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @SupportedAnnotationTypes("org.jorm.annotations.Model")
@@ -26,7 +28,8 @@ public class ModelProcessor extends AbstractProcessor {
                 String query = "CREATE TABLE IF NOT EXISTS " + typeElement.getSimpleName().toString() + " ";
                 ConstraintProcessor constraintProcessor = new ConstraintProcessor();
                 constraintProcessor.init(processingEnv);
-                constraintProcessor.process(annotations, roundEnv);
+                List<Element> elements = element.getEnclosedElements().stream().filter((n) -> n.getKind().equals(ElementKind.FIELD)).collect(Collectors.toList());
+                constraintProcessor.process(elements);
                 String temp = constraintProcessor.getFieldsStatement();
                 query += temp;
                 query += ");";
