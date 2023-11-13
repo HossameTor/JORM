@@ -8,6 +8,9 @@ import javax.lang.model.element.*;
 
 import org.jorm.DatabaseConnection;
 import org.jorm.annotations.Model;
+import org.jorm.annotations.Relationship;
+
+import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,17 +28,18 @@ public class ModelProcessor extends AbstractProcessor {
         for (Element element : roundEnv.getElementsAnnotatedWith(Model.class)) {
             if (element instanceof TypeElement) {
                 TypeElement typeElement = (TypeElement) element;
-                String query = "CREATE TABLE IF NOT EXISTS " + typeElement.getSimpleName().toString() + " ";
-                ConstraintProcessor constraintProcessor = new ConstraintProcessor();
-                constraintProcessor.init(processingEnv);
+                String query = "CREATE TABLE IF NOT EXISTS " + typeElement.getSimpleName().toString() + " (";
                 List<Element> elements = element.getEnclosedElements().stream().filter((n) -> n.getKind().equals(ElementKind.FIELD)).collect(Collectors.toList());
-                constraintProcessor.process(elements);
-                String temp = constraintProcessor.getFieldsStatement();
-                query += temp;
-                RelationshipProcessor relationshipProcessor = new RelationshipProcessor();
-                relationshipProcessor.init(processingEnv);
-                relationshipProcessor.process(elements);
-                query += relationshipProcessor.getField_stm() + relationshipProcessor.getField_Fk();
+                boolean firstElement = true;
+                for(Element field: elements){
+                    Annotation relationship = field.getAnnotation(Relationship.class);
+                    if(relationship!=null){
+                        continue;
+                    }
+                    if(!firstElement) query += ",";
+                    else firstElement = false;
+                    query += getFieldStatement((VariableElement) field)+"\n";
+                }
                 query += ");";
                 System.out.println(query);
                 createTable(query);
@@ -54,5 +58,32 @@ public class ModelProcessor extends AbstractProcessor {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String fieldTypeMapper(VariableElement f){
+        switch (f.asType().toString()){
+            case "int":
+                return "INT";
+            case "java.lang.String":
+                return "VARCHAR(255)";
+            case "long":
+                return "BIGINT";
+            case  "float":
+                return "FLOAT";
+            case "double":
+                return "DOUBLE";
+            case "java.time.LocalDate":
+                return "DATE";
+            case "java.time.LocalDateTime":
+                return "DATETIME";
+            case "boolean":
+                return "BOOLEAN";
+            default:
+                return f.asType().toString().toUpperCase();
+        }
+    }
+    String getFieldStatement(VariableElement field){
+        String fieldStatement = field.getSimpleName() + " " + fieldTypeMapper(field);
+        return fieldStatement;
     }
 }
