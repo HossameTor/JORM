@@ -4,24 +4,20 @@ import com.google.auto.service.AutoService;
 import org.jorm.ConstraintType;
 import org.jorm.DatabaseConnection;
 import org.jorm.annotations.Constraint;
-import org.jorm.annotations.Model;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 @SupportedAnnotationTypes("org.jorm.annotations.Constraint")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
 @AutoService(Processor.class)
-public class ConstraintProcessor extends AbstractProcessor {
+public class QonstraintProcessor extends AbstractProcessor {
 
 
     /*public boolean process(List<Element> elements) {
