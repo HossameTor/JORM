@@ -19,33 +19,6 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class QonstraintProcessor extends AbstractProcessor {
 
-
-    /*public boolean process(List<Element> elements) {
-        boolean firstElement = true;
-        for (Element element : elements) {
-            if (element.getAnnotation(Constraint.class)!= null){
-                if (element.getKind() == ElementKind.FIELD){
-                    if(!firstElement){
-                        fieldStatement+= " ,";
-                    }else {
-                        firstElement = false;
-                    }
-                    VariableElement fieldElement = (VariableElement) element;
-                    fieldStatement += fieldElement.getSimpleName() + " " + FieldTypeMapper(fieldElement);
-                    Constraint constraintAnnotation = fieldElement.getAnnotation(Constraint.class);
-                    String[] types = constraintAnnotation.types();
-                    for(String c : types){
-                        fieldStatement += " "+ c;
-                    }
-                    if (!constraintAnnotation.def().equals("")){
-                        fieldStatement += " DEFAULT " + constraintAnnotation.def();
-                    }
-                }
-                fieldStatement +="\n";
-            }
-        }
-        return true;
-    }*/
     private String fieldTypeMapper(VariableElement f){
         switch (f.asType().toString()){
             case "int":

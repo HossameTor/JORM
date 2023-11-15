@@ -41,7 +41,7 @@ public class ModelProcessor extends AbstractProcessor {
                     query += getFieldStatement((VariableElement) field)+"\n";
                 }
                 query += ");";
-                System.out.println(query);
+                System.out.println("-----------------------------------\n"+query);
                 createTable(query);
             }
         }
