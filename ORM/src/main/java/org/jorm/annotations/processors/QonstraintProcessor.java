@@ -4,6 +4,7 @@ import com.google.auto.service.AutoService;
 import org.jorm.ConstraintType;
 import org.jorm.DatabaseConnection;
 import org.jorm.annotations.Constraint;
+import org.jorm.annotations.processors.mapper.FieldTypeMapper;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -19,28 +20,6 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class QonstraintProcessor extends AbstractProcessor {
 
-    private String fieldTypeMapper(VariableElement f){
-        switch (f.asType().toString()){
-            case "int":
-                return "INT";
-            case "java.lang.String":
-                return "VARCHAR(255)";
-            case "long":
-                return "BIGINT";
-            case  "float":
-                return "FLOAT";
-            case "double":
-                return "DOUBLE";
-            case "java.time.LocalDate":
-                return "DATE";
-            case "java.time.LocalDateTime":
-                return "DATETIME";
-            case "boolean":
-                return "BOOLEAN";
-            default:
-                return f.asType().toString().toUpperCase();
-        }
-    }
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         for (Element element : roundEnv.getElementsAnnotatedWith(Constraint.class)) {
@@ -50,7 +29,7 @@ public class QonstraintProcessor extends AbstractProcessor {
                 Constraint constraint = element.getAnnotation(Constraint.class);
                 List<ConstraintType> types = Arrays.asList(constraint.types());
                 if (types.contains(ConstraintType.NotNull)){
-                    query+="MODIFY COLUMN "+element.getSimpleName().toString()+" "+ fieldTypeMapper((VariableElement) element)+" NOT NULL";
+                    query+="MODIFY COLUMN "+element.getSimpleName().toString()+" "+ FieldTypeMapper.mapper((VariableElement) element)+" NOT NULL";
                     if (types.contains(ConstraintType.UNIQUE)) query+= ",";
                 }
                 if (types.contains(ConstraintType.UNIQUE)){
