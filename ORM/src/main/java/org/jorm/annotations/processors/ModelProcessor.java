@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @SupportedAnnotationTypes("org.jorm.annotations.Model")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
-@AutoService(Processor.class)
 public class ModelProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
