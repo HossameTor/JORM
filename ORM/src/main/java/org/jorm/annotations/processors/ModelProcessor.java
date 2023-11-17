@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @SupportedAnnotationTypes("org.jorm.annotations.Model")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
 @AutoService(Processor.class)
