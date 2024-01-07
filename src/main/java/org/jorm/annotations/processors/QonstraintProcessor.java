@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 @SupportedAnnotationTypes("org.jorm.annotations.Constraint")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
-@AutoService(Processor.class)
 public class QonstraintProcessor extends AbstractProcessor {
 
 

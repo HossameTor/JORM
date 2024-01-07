@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 @SupportedAnnotationTypes("org.jorm.annotations.Relationship")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
-@AutoService(Processor.class)
 public class RelationshipProcessor extends AbstractProcessor {
     private String field_stm="";
     private String field_Fk="";
