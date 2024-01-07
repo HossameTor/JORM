@@ -1,0 +1,30 @@
+rule Field2Columns
+    transform s: Source!Field
+    to t: Target!Column{
+        t.name = s.name;
+        switch (s.type) {
+                case "short" : t.dataType := "TINYINT";
+                case "int" : t.dataType := "INT";
+                case "long" : t.dataType := "BIGINT";
+                case "float" : t.dataType := "FLOAT";
+                case "double" : t.dataType := "DOUBLE";
+                case "char" : t.dataType := "CHAR";
+                case "boolean" : t.dataType := "BOOLEAN";
+                case "java.lang.String" : t.dataType := "VARCHAR(255)";
+                case "java.time.LocalDate" : t.dataType := "DATE";
+                case "java.time.LocalTime" : t.dataType := "TIME";
+                case "java.time.LocalDateTime" : t.dataType := "DATETIME";
+                default : t.dataType := null;
+            }
+        t.uq = s.uq;
+        t.nullable = s.nullable;
+    }
+rule Class2Table
+    transform s: Source!Class
+    to t: Target!Table{
+        t.name = s.name;
+        for (field in s.fields){
+            var c = field.equivalent();
+            t.columns.add(c);
+        }
+    }

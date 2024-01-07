@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 @SupportedAnnotationTypes("org.jorm.annotations.Constraint")
 @SupportedSourceVersion(SourceVersion.RELEASE_19)
-@AutoService(Processor.class)
 public class QonstraintProcessor extends AbstractProcessor {
 
 
@@ -81,7 +80,7 @@ public class QonstraintProcessor extends AbstractProcessor {
                     if (types.contains(ConstraintType.UNIQUE)) query+= ",";
                 }
                 if (types.contains(ConstraintType.UNIQUE)){
-                    query+="ADD CONSTRAINT unique_"+element.getSimpleName().toString()+"_constraint UNIQUE ("+
+                    query+="ADD CONSTRAINT UNIQUE ("+
                             element.getSimpleName().toString()+");";
                 }
                 System.out.println(query);

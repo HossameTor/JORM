@@ -1,0 +1,13 @@
+package Class;
+
+class Class{
+    attr String name;
+    val Field[*] fields;
+}
+
+class Field{
+    attr String name;
+    attr boolean uq;
+    attr boolean nullable;
+    attr String type;
+}

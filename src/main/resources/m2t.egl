@@ -1,0 +1,11 @@
+[%var table = Table.all.first();%]
+CREATE TABLE [%= table.name %] (
+[%var i=0;%]
+[% for(field in table.columns){%]
+    [% if(i!=0) {%],[%}%]
+    [%= field.name %]  [%= field.dataType %] [% if(field.uq) {%] UNIQUE [%}%] [% if(field.nullable != true) {%] NOT NULL [%}%]
+    [%i = i+1;%]
+[%}%]
+
+)
+

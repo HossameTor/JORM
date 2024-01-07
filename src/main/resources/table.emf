@@ -1,0 +1,13 @@
+package Table;
+
+class Table{
+    attr String name;
+    val Column[*] columns;
+}
+
+class Column{
+    attr String name;
+    attr String dataType;
+    attr boolean uq;
+    attr boolean nullable;
+}
