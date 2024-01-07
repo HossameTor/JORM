@@ -1,0 +1,27 @@
+rule FieldType2DatType
+	transform s: Source!Type
+	to t: Target!DatType{
+		if (s.type == "short") {
+            t.dataType == "TINYINT";
+        } else if (s.type == "int") {
+            t.dataType == "INT";
+        } else if (s.type == "long") {
+            t.dataType == "BIGINT";
+        } else if (s.type == "float") {
+            t.dataType == "FLOAT";
+        } else if (s.type == "double") {
+            t.dataType == "DOUBLE";
+        } else if (s.type == "char") {
+            t.dataType == "CHAR";
+        } else if (s.type == "boolean") {
+            t.dataType == "BOOLEAN";
+        } else if (s.type == "String") {
+            t.dataType == "VARCHAR";
+        } else if (s.type == "java.time.LocalDate") {
+            t.dataType == "DATE";
+        } else if (s.type == "java.time.LocalTime") {
+            t.dataType == "TIME";
+        } else if (s.type == "java.time.LocalDateTime") {
+            t.dataType == "DATETIME";
+        }
+	}

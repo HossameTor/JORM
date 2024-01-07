@@ -81,7 +81,7 @@ public class QonstraintProcessor extends AbstractProcessor {
                     if (types.contains(ConstraintType.UNIQUE)) query+= ",";
                 }
                 if (types.contains(ConstraintType.UNIQUE)){
-                    query+="ADD CONSTRAINT unique_"+element.getSimpleName().toString()+"_constraint UNIQUE ("+
+                    query+="ADD CONSTRAINT UNIQUE ("+
                             element.getSimpleName().toString()+");";
                 }
                 System.out.println(query);

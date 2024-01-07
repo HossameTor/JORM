@@ -1,0 +1,27 @@
+package Class;
+
+class Class{
+    attr String name;
+    val Field[*] fields;
+}
+
+class Field{
+    attr String name;
+    attr boolean unique;
+    attr boolean nullable;
+    val Type type;
+}
+
+enum Type{
+    short;
+    int;
+    long;
+    float;
+    double;
+    char;
+    boolean;
+    java.lang.String;
+    java.time.LocalDate;
+    java.time.LocalTime;
+    java.time.LocalDateTime;
+}

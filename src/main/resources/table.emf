@@ -1,0 +1,27 @@
+package Table;
+
+class Table{
+    attr String name;
+    val Column[*] columns;
+}
+
+class Column{
+    attr String name;
+    val DataType dataType;
+    boolean unique;
+    boolean nullable;
+}
+
+enum DataType{
+    INT;
+    TINYINT;
+    BIGINT;
+    FLOAT;
+    DOUBLE;
+    CHAR;
+    VARCHAR;
+    DATE;
+    TIME;
+    DATETIME;
+    BOOLEAN;
+}

@@ -1,17 +1,20 @@
 package org.jorm.annotations.processors;
 
+import com.google.auto.service.AutoService;
 import org.jorm.RelationshipType;
 import org.jorm.annotations.Relationship;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import java.util.List;
 import java.util.Set;
-
+@SupportedAnnotationTypes("org.jorm.annotations.Relationship")
+@SupportedSourceVersion(SourceVersion.RELEASE_19)
+@AutoService(Processor.class)
 public class RelationshipProcessor extends AbstractProcessor {
     private String field_stm="";
     private String field_Fk="";
@@ -35,6 +38,7 @@ public class RelationshipProcessor extends AbstractProcessor {
     }
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
         return false;
     }
 
