@@ -7,21 +7,7 @@ class Class{
 
 class Field{
     attr String name;
-    attr boolean unique;
+    attr boolean uq;
     attr boolean nullable;
-    val Type type;
-}
-
-enum Type{
-    short;
-    int;
-    long;
-    float;
-    double;
-    char;
-    boolean;
-    java.lang.String;
-    java.time.LocalDate;
-    java.time.LocalTime;
-    java.time.LocalDateTime;
+    attr String type;
 }
