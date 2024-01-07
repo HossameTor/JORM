@@ -7,21 +7,7 @@ class Table{
 
 class Column{
     attr String name;
-    val DataType dataType;
-    boolean unique;
-    boolean nullable;
-}
-
-enum DataType{
-    INT;
-    TINYINT;
-    BIGINT;
-    FLOAT;
-    DOUBLE;
-    CHAR;
-    VARCHAR;
-    DATE;
-    TIME;
-    DATETIME;
-    BOOLEAN;
+    attr String dataType;
+    attr boolean uq;
+    attr boolean nullable;
 }
